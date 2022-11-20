@@ -380,7 +380,7 @@ function InputFocus() {
 
 React applications are typically created using a tool like `create-react-app` (CRA). CRA is a command-line tool that helps you setup new React projects and install all the required dependencies without you needing to manually create all the boilerplate.
 
-![](.gitbook/assets/image.png)
+![](<.gitbook/assets/image (1).png>)
 
 * **package.json:** dependencies
 * &#x20;**src/:** React-specific code (components, CSS, ...)
@@ -388,3 +388,21 @@ React applications are typically created using a tool like `create-react-app` (C
 * **index.js:** main entrypoint of the React application, but typically you would not need to modify it very much (or at all). It just contains some boilerplate React code that takes your components and converts it into actual HTML and JS that can be run in a browser.
 * **public/:** folder then contains only one file by default - **`index.html`.** You would usually never touch this yourself. This is a super simple barebones HTML file. When a React app is run, React does some magic under the hood that takes all your components and Javascript code converts it to actual HTML and JS that can run in the browser and replaces the contents of `index.html` with all of that. Then, the updated `index.html` is what is displayed to the user.&#x20;
   * If you wanted to add images, fonts, music, etc. to your website, they would also go into the **`public/`** folder. The **`public/`** folder basically contains everything you want to be directly accessible on your website.
+
+### **Backend - NEXT.js**
+
+**React** itself is a framework for building web apps
+
+**Next**, on top, is a framework for React that also introduces a few additional features that React did not have.
+
+**Next** is 90% the exact same thing with **React** and you can get started using it very quickly.
+
+1. **Next.js** allows you to **write both Frontend and Backend code** in a single project.
+2. **Next.js** makes **creating multi-page web apps very easy**
+3. **Next.js** also features **Server Side Rendering (SSR)** and **Static Site Generation (SSG)**
+
+#### Routing in Next
+
+Similar to `create-react-app`, Next has a tool called `create-next-app` that can automatically help you setup new Next.js projects with ease
+
+![](.gitbook/assets/image.png)
