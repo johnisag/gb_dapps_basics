@@ -67,7 +67,7 @@ Dynamic pages require components to render different data. The main use case of 
 **We can use this:**
 
 ```javascript
-import "./styles.css";
+import "./styles.CSS";
 
 export default function App() {
   return (
@@ -151,3 +151,91 @@ function PrintTypedText() {
 
 
 
+### React Hooks - useState and useEffect
+
+What about updating variables?
+
+When updating regular variables from within a React component, even though the value is updated, React does not re-render the view of the web app. It does not automatically update the HTML view of the page.
+
+#### useState
+
+We can use the **`useState` ** hook to maintain a variable which automatically re-renders the HTML displayed on the screen every time its value is changed.&#x20;
+
+```javascript
+function ThisWorks() {
+  // myNumber is the variable itself (state variable)
+  // setMyNumber is a function that lets us update the value
+  // useState(0) initializes the React Hook
+  // with the starting value of 0
+  const [myNumber, setMyNumber] = useState(0);
+
+  function increment() {
+    // Sets the new value to the old value + 1
+    setMyNumber(myNumber + 1);
+  }
+
+  return (
+    <div>
+      <p>{myNumber}</p>
+      <button onClick={increment}>Increment!</button>
+    </div>
+  );
+}
+```
+
+```javascript
+function StateWithInput() {
+  // myName is the variable
+  // setMyName is the updater function
+  // Create a state variable with initial value
+  // being an empty string ""
+  const [myName, setMyName] = useState("");
+
+  function handleOnChange(text) {
+    setMyName(text);
+  }
+
+  return (
+    <div>
+      <input type="text" onChange={(e) => handleOnChange(e.target.value)} />
+      <p>Hello, {myName}!</p>
+    </div>
+  );
+}
+```
+
+**useState with complex objects**
+
+```javascript
+function StateArray() {
+  const [fruits, setFruits] = useState([]);
+  const [currentFruit, setCurrentFruit] = useState("");
+
+  function updateCurrentFruit(text) {
+    setCurrentFruit(text);
+  }
+
+  function addFruitToArray() {
+    // The spread operator `...fruits` adds all elements
+    // from the `fruits` array to the `newFruits` array
+    // and then we add the `currentFruit` to the array as well
+    // DO NOT UPDATE STATE VARIABLE DIRECTLY WITH PUSH
+    // IT IS INVALID STATE UPDATE WITH UNEXPECTED OUTCOME
+    const newFruits = [...fruits, currentFruit];
+    setFruits(newFruits);
+  }
+
+  return (
+    <div>
+      <input type="text" onChange={(e) => updateCurrentFruit(e.target.value)} />
+      <button onClick={addFruitToArray}>Add Fruit</button>
+
+      <ul>
+        {fruits.map((fruit, index) => (
+          <li key={index}>{fruit}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}ja
+```
