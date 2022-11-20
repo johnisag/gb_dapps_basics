@@ -139,3 +139,15 @@ function Button() {
 
 **Interactivity with input**&#x20;
 
+```javascript
+function PrintTypedText() {
+  function handleOnChange(text) {
+    console.log(text);
+  }
+
+  return <input type="text" onChange={(e) => handleOnChange(e.target.value)} />;
+}
+```
+
+
+
