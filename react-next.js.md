@@ -240,6 +240,8 @@ function StateArray() {
 }ja
 ```
 
+**`useState` updates** a state variable **asynchronously** meaning that <mark style="color:orange;">the state variable doesn't get updated instantly.</mark>
+
 ### useEffect
 
 * Need to automatically run some code when the page is first loaded
@@ -323,3 +325,53 @@ function DependentEffect() {
   );
 }
 ```
+
+#### useRef
+
+It is quite similar to **`useState` ** hook **** on the surface, but has some subtle differences that are actually quite important
+
+\
+**Diff 1:** **useRef** - does not cause the HTML view to re-render
+
+```javascript
+function CounterWithRef() {
+  const myNumber = useRef();
+
+  function increment() {
+    if (myNumber.current !== undefined) {
+      myNumber.current += 1;
+    } else {
+      myNumber.current = 1;
+    }
+    console.log(myNumber.current);
+  }
+
+  return (
+    <div>
+      <p>{myNumber.current}</p>
+      <button onClick={increment}>Increment!</button>
+    </div>
+  );
+}
+```
+
+**Diff 2: useRef -** allows for synchronous updates
+
+**Diff 3: Referencing DOM Elements**
+
+**useRef** lets us refer directly to DOM elements. This is something that is not possible with **`useState`**
+
+{% code overflow="wrap" %}
+```javascript
+// When you run this above example, you will notice that as soon as the page loads, // the input element is already in focus i.e. you can start typing without clicking // on it first. This is because we hold a reference to the input element, and have a // useEffect that runs on page load due to having an empty dependency array, that  //focuses on the input element.
+function InputFocus() {
+  const inputRef = useRef();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
+  return <input ref={inputRef} type="text" />;
+}
+```
+{% endcode %}
