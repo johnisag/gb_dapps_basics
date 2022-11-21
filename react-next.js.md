@@ -384,7 +384,7 @@ function InputFocus() {
 
 React applications are typically created using a tool like `create-react-app` (CRA). CRA is a command-line tool that helps you setup new React projects and install all the required dependencies without you needing to manually create all the boilerplate.
 
-![](<.gitbook/assets/image (1).png>)
+![](<.gitbook/assets/image (1) (1).png>)
 
 * **package.json:** dependencies
 * &#x20;**src/:** React-specific code (components, CSS, ...)
