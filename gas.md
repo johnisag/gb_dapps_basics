@@ -82,7 +82,7 @@ The upgrade introduced variable size blocks to Ethereum. Each block now has a **
 
 The base fees is increased by a maximum of 12.5% per block if the target 15M gas is exceeded. This exponential growth makes it financially non-viable for block gas to remain high indefinitely, therefore allowing nodes to stay synced with the network and not constantly be executing 30M gas blocks.
 
-![](<.gitbook/assets/image (7).png>)
+![](<.gitbook/assets/image (6).png>)
 
 #### Better Gas Estimation
 

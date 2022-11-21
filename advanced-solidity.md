@@ -492,3 +492,29 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 
 ### Solidity Libraries
 
+* Similar to contracts in Solidity
+* Typically, libraries are used to add helper functions to your contracts
+* E.g. **SafeMath** which ensures that mathematical operations do not cause an integer underflow or overflow.
+* A few limitations
+  * Cannot contain any state variables
+  * Cannot transfer ETH
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.10;
+
+library SafeMath {
+    function add(uint x, uint y) internal pure returns (uint) {
+        uint z = x + y;
+        // If z overflowed, throw an error
+        require(z >= x, "uint overflow");
+        return z;
+    }
+}
+
+contract TestSafeMath {
+    function testAdd(uint x, uint y) public pure returns (uint) {
+        return SafeMath.add(x, y);
+    }
+}
+```
