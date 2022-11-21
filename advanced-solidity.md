@@ -159,18 +159,102 @@ contract TodoList {
 
 ### View and Pure Functions
 
+Getter functions (those which return values) can be declared either `view` or `pure`.
+
+* `View`: Functions which do not change any state values
+* `Pure`: Functions which do not change any state values, but also don't read any state values
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.10;
+
+contract ViewAndPure {
+    // Declare a state variable
+    uint public x = 1;
+
+    // Promise not to modify the state (but can read the state)
+    function addToX(uint y) public view returns (uint) {
+        return x + y;
+    }
+
+    // Promise not to modify or read from the state
+    function add(uint i, uint j) public pure returns (uint) {
+        return i + j;
+    }
+}
+```
+
+### Function Modifiers
+
+**Modifiers are code that can be run before and/or after a function call.**
+
+* Commonly used for restricting access to certain functions
+* Validating input parameters
+* Protecting against certain types of attacks
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.10;
+
+contract Modifiers {
+    address public owner;
+
+    constructor() {
+        // Set the contract deployer as the owner of the contract
+        owner = msg.sender;
+    }
+
+    // Create a modifier that only allows a function to be called by the owner
+    modifier onlyOwner() {
+        require(msg.sender == owner, "You are not the owner");
+
+        // Underscore is a special character used inside modifiers
+        // Which tells Solidity to execute the function the modifier is used on
+        // at this point
+        // Therefore, this modifier will first perform the above check
+        // Then run the rest of the code
+        _;
+    }
+
+    // Create a function and apply the onlyOwner modifier to it
+    function changeOwner(address _newOwner) public onlyOwner {
+        // We will only reach this point if the modifier succeeds with its checks
+        // So the caller of this transaction must be the current owner
+        owner = _newOwner;
+    }
+}
+```
+
+### Events
+
+* Events allow contracts to perform logging on the Ethereum blockchain
+* Logs for a given contract can be parsed later to perform updates on the frontend interface
+* Commonly used to allow frontend interfaces to listen for specific events
+* And / Or Cheap Storage
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.10;
+
+contract Events {
+    // Declare an event which logs an address and a string
+    event TestCalled(address sender, string message);
+
+    function test() public {
+        // Log an event
+        emit TestCalled(msg.sender, "Someone called test()!");
+    }
+}
+```
 
 
 
+****
 
+****
 
+****
 
-
-
-
-
-
-
-
+****
 
 ****

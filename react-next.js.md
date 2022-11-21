@@ -384,7 +384,7 @@ function InputFocus() {
 
 React applications are typically created using a tool like `create-react-app` (CRA). CRA is a command-line tool that helps you setup new React projects and install all the required dependencies without you needing to manually create all the boilerplate.
 
-![](<.gitbook/assets/image (1).png>)
+![](<.gitbook/assets/image (1) (1).png>)
 
 * **package.json:** dependencies
 * &#x20;**src/:** React-specific code (components, CSS, ...)
@@ -409,7 +409,7 @@ React applications are typically created using a tool like `create-react-app` (C
 
 Similar to `create-react-app`, Next has a tool called `create-next-app` that can automatically help you setup new Next.js projects with ease
 
-![](<.gitbook/assets/image (2).png>)
+![](<.gitbook/assets/image (2) (1).png>)
 
 * **public/:** if you wanted to add images, icons, fonts, music, etc. you would place them all in the `public/` folder.
 * **styles/:** providing a dedicated spot for all your CSS files.
