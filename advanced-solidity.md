@@ -247,7 +247,163 @@ contract Events {
 }
 ```
 
+### Constructors
 
+**A constructor is an optional function that is executed when the contract is first deployed**
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.10;
+
+contract X {
+    string public name;
+
+    // You will need to provide a string argument when deploying the contract
+    constructor(string memory _name) {
+        // This will be set immediately when the contract is deployed
+        name = _name;
+    }
+}
+```
+
+### Inheritance
+
+**Inheritance is the procedure by which one contract can inherit the attributes and methods of another contract.**
+
+* Support of **multiple inheritance**
+* Contracts can inherit another contract by using the **is**
+* **Virtual** and **override keywords**&#x20;
+* Order of **inheritance** matters **(right-most parent)**
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.10;
+
+/* Graph of inheritance
+  A
+ /  \
+B    C
+|\  /|
+| \/ |
+| /\ | 
+D    E
+
+*/
+
+contract A {
+    // Declare a virtual function foo() which can be overridden by children
+    function foo() public pure virtual returns (string memory) {
+        return "A";
+    }
+}
+
+contract B is A {
+    // Override A.foo();
+    // But also allow this function to be overridden by further children
+    // So we specify both keywords - virtual and override
+    function foo() public pure virtual override returns (string memory) {
+        return "B";
+    }
+}
+
+contract C is A {
+    // Similar to contract B above
+    function foo() public pure virtual override returns (string memory) {
+        return "C";
+    }
+}
+
+// When inheriting from multiple contracts, if a function is defined multiple times, the right-most parent contract's function is used.
+contract D is B, C {
+    // D.foo() returns "C"
+    // since C is the right-most parent with function foo();
+    // override (B,C) means we want to override a method that exists in two parents
+    function foo() public pure override (B, C) returns (string memory) {
+        // super is a special keyword that is used to call functions
+        // in the parent contract
+        return super.foo();
+    }
+}
+
+contract E is C, B {
+    // E.foo() returns "B"
+    // since B is the right-most parent with function foo();
+    function foo() public pure override (C, B) returns (string memory) {
+        return super.foo();
+    }
+}
+```
+
+### Transferring ETH
+
+Currently, the recommended way to transfer **ETH** from a contract is to **use** the **call function**. The **call function returns a bool** indicating the **success** or **failure** of the transfer.
+
+#### How to receive Ether in a regular Ethereum account address
+
+If transferring ETH to a regular account (like a Metamask address), you do not need to do anything special as all such accounts can automatically accept ETH transfers.
+
+#### How to receive Ether in a contract
+
+if you are writing a contract that you want to be able to receive ETH transfers directly, you must have at least one of the functions below
+
+* **`receive() external payable :`** if **`msg.data`** is an **empty value**
+* **`fallback() external payable :` otherwise**
+
+**`msg.data` ** is a way to specify arbitrary data along with a transaction. You will usually not be using it manually.
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.10;
+
+contract ReceiveEther {
+    /*
+    Which function is called, fallback() or receive()?
+
+           send Ether
+               |
+         msg.data is empty?
+              / \
+            yes  no
+            /     \
+receive() exists?  fallback()
+         /   \
+        yes   no
+        /      \
+    receive()   fallback()
+    */
+
+    // Function to receive Ether. msg.data must be empty
+    receive() external payable {}
+
+    // Fallback function is called when msg.data is not empty
+    fallback() external payable {}
+
+    function getBalance() public view returns (uint) {
+        return address(this).balance;
+    }
+}
+
+contract SendEther {
+    function sendEth(address payable _to) public payable {
+        // Just forward the ETH received in this payable function
+        // to the given address
+        uint amountToSend = msg.value;
+        // call returns a bool value specifying success or failure
+        (bool success, bytes memory data) = _to.call{value: msg.value}("");
+        require(success == true, "Failed to send ETH");
+    }
+}
+```
+
+****
+
+****
+
+****
+
+****
+
+****
 
 ****
 
