@@ -439,10 +439,56 @@ contract MyContract {
 
 ### Import Statements
 
-****
+#### Local Imports
 
-****
+```
+├── Import.sol
+└── Foo.sol
+```
 
-****
+**Foo.sol**
 
-****
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.10;
+
+contract Foo {
+    string public name = "Foo";
+}
+```
+
+Import ** `Foo` ** and use it in **`Import.sol`**
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.10;
+
+// import Foo.sol from current directory
+import "./Foo.sol";
+
+contract Import {
+    // Initialize Foo.sol
+    Foo public foo = new Foo();
+
+    // Test Foo.sol by getting it's name.
+    function getFooName() public view returns (string memory) {
+        return foo.name();
+    }
+}
+```
+
+<mark style="color:orange;">**NOTE:**</mark> <mark style="color:orange;"></mark><mark style="color:orange;">When we use Hardhat, we can also install contracts as node modules through</mark> <mark style="color:orange;"></mark><mark style="color:orange;">`npm`</mark><mark style="color:orange;">, and then import contracts from the</mark> <mark style="color:orange;"></mark><mark style="color:orange;">`node_modules`</mark> <mark style="color:orange;"></mark><mark style="color:orange;">folder. These also count as local imports, as technically when you install a package you are downloading the contracts to your local machine.</mark>
+
+#### External Imports
+
+```solidity
+// https://github.com/owner/repo/blob/branch/path/to/Contract.sol
+import "https://github.com/owner/repo/blob/branch/path/to/Contract.sol";
+
+// Example import ERC20.sol from openzeppelin-contract repo
+// https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
+```
+
+### Solidity Libraries
+
