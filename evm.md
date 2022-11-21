@@ -6,7 +6,7 @@ description: Ethereum Virtual Machine (EVM)
 
 The Ethereum network exists solely for the purpose of keeping the single, continuous, uninterrupted, and immutable operation of the state machine that is the Ethereum blockchain.
 
-<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption><p>Ethereum Application Stack</p></figcaption></figure>
+<figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption><p>Ethereum Application Stack</p></figcaption></figure>
 
 ### Ethereum as a State Machine
 
@@ -26,7 +26,7 @@ The state in Ethereum is stored as a really large data structure called a [Merkl
 
 The EVM lives as a layer in the software stack of Ethereum.
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption><p>Software Stack of Ethereum</p></figcaption></figure>
+<figure><img src=".gitbook/assets/image (6).png" alt=""><figcaption><p>Software Stack of Ethereum</p></figcaption></figure>
 
 Ethereum nodes contain implementations of the EVM, and the EVM can then execute EVM code on it.&#x20;
 
@@ -34,9 +34,9 @@ Ethereum nodes contain implementations of the EVM, and the EVM can then execute 
 
 ### EVM Code Generation
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src=".gitbook/assets/image (6).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
 ### EVM Instructions (OPCODES)
 
@@ -52,7 +52,7 @@ The EVM has logic present that allows it to execute [EVM Opcodes](https://ethere
 
 When a smart contract is compiled into bytecode (represented in hexadecimal), it compiles down to EVM opcodes. These opcodes are what get executed on the EVM.
 
-<figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
 
 ### EVM Implementations
 
