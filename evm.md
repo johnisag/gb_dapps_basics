@@ -10,7 +10,7 @@ The Ethereum network exists solely for the purpose of keeping the single, contin
 
 ### Ethereum as a State Machine
 
-<figure><img src=".gitbook/assets/image (6).png" alt=""><figcaption><p>EVM</p></figcaption></figure>
+<figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption><p>EVM</p></figcaption></figure>
 
 ### Ethereum State Transition
 
@@ -26,7 +26,7 @@ The state in Ethereum is stored as a really large data structure called a [Merkl
 
 The EVM lives as a layer in the software stack of Ethereum.
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption><p>Software Stack of Ethereum</p></figcaption></figure>
+<figure><img src=".gitbook/assets/image (6).png" alt=""><figcaption><p>Software Stack of Ethereum</p></figcaption></figure>
 
 Ethereum nodes contain implementations of the EVM, and the EVM can then execute EVM code on it.&#x20;
 
@@ -34,9 +34,9 @@ Ethereum nodes contain implementations of the EVM, and the EVM can then execute 
 
 ### EVM Code Generation
 
-<figure><img src=".gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
 ### EVM Instructions (OPCODES)
 

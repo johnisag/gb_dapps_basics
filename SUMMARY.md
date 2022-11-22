@@ -7,3 +7,4 @@
 * [Advanced Solidity](advanced-solidity.md)
 * [Providers and Signers](providers-and-signers.md)
 * [Big Numbers and ABI](big-numbers-and-abi.md)
+* [ERC20 Approval Flow](erc20-approval-flow.md)
