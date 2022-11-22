@@ -5,3 +5,5 @@
 * [Gas](gas.md)
 * [EVM](evm.md)
 * [Advanced Solidity](advanced-solidity.md)
+* [Providers and Signers](providers-and-signers.md)
+* [Big Numbers and ABI](big-numbers-and-abi.md)
