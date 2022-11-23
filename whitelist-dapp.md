@@ -108,7 +108,7 @@ main()
   });// Some codeidi
 ```
 
-Create a `.env` file in the `NFT-Tutorial` folder and add the following lines
+Create a `.env` file in the `hardha_tutorial` folder and add the following lines
 
 ```python
 QUICKNODE_HTTP_URL="add-quicknode-http-provider-url-here"
@@ -145,6 +145,12 @@ module.exports = {
     },
   },
 };
+```
+
+Compile through shell
+
+```shell
+npx hardhat compile
 ```
 
 Deploy through shell
