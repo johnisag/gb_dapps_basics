@@ -153,6 +153,12 @@ Compile through shell
 npx hardhat compile
 ```
 
+<mark style="color:orange;">**NOTE:**</mark> If we experience **Error: Cannot find module '@nomicfoundation/hardhat-toolbox'**, try to run the below to resolve dependency from shell
+
+```shell
+npm install --save-dev @nomicfoundation/hardhat-toolbox
+```
+
 Deploy through shell
 
 ```shell
