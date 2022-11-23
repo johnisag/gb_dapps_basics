@@ -167,7 +167,43 @@ npx hardhat run scripts/deploy.js --network goerli
 
 Copy your deployed contract address from **shell** and find your new token contract on  [Goerli Etherscan  ](https://goerli.etherscan.io/)
 
+#### Website
 
+To develop the website we will use [React](https://reactjs.org/) and [Next Js](https://nextjs.org/).
 
+Create the new **`Next.js`** app from shell (project root)
 
+```shell
+npx create-next-app@latest
+```
+
+The folder structure should look something like
+
+```
+- Whitelist-Dapp    
+    - hardhat-tutorial    
+    - my-app
+```
+
+Now to run the app, execute these commands in the terminal
+
+```shell
+cd my-appnpm 
+run dev
+```
+
+Now go to `http://localhost:3000`, your app should be running 🤘
+
+Now let's install [Web3Modal library](https://github.com/Web3Modal/web3modal).&#x20;
+
+* Web3Modal is an easy-to-use library to help developers easily allow their users to connect to your dApps with all sorts of different wallets.&#x20;
+* By default Web3Modal Library supports injected providers like (Metamask, Dapper, Gnosis Safe, Frame, Web3 Browsers, etc) and WalletConnect,&#x20;
+* You can also easily configure the library to support Portis, Fortmatic, Squarelink, Torus, Authereum, D'CENT Wallet and Arkane. (Here's a live example on [Codesandbox.io](https://codesandbox.io/s/j43b10))
+
+Open up a terminal pointing **at`my-app` directory** and execute this command
+
+```shell
+npm install web3modal
+npm install ethers
+```
 
