@@ -53,5 +53,18 @@ Install **`@openzeppelin/contracts`** as we would be importing [**Openzeppelin's
 npm install @openzeppelin/contracts
 ```
 
+We will need to call the **`Whitelist Contract`** that you deployed for your previous level to check for addresses that were whitelisted and give them presale access. We only need to call **`mapping(address => bool) public whitelistedAddresses;`**&#x20;
 
+We can create an interface for **`Whitelist contract`** with a function only for this mapping, this way we would save **`gas`** as we would not need to inherit and deploy the entire **`Whitelist Contract`** but only a part of it.
+
+Create a new file inside the **`contracts`** directory and call it **`IWhitelist.sol`**.
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.4;
+
+interface IWhitelist {
+    function whitelistedAddresses(address) external view returns (bool);
+}
+```
 
