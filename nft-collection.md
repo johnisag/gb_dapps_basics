@@ -220,3 +220,46 @@ Go to [Quicknode](https://www.quicknode.com/?utm\_source=learnweb3\&utm\_campaig
 Quicknode is a node provider that lets you connect to various different blockchains. We will be using it to deploy our contract through Hardhat. After creating an account, `Create an endpoint` on Quicknode, select `Ethereum`, and then select the `Goerli` network. Click `Continue` in the bottom right and then click on `Create Endpoint`. Copy the link given to you in `HTTP Provider` and add it to the `.env` file below for `QUICKNODE_HTTP_URL`
 
 To get your private key, you need to export it from Metamask. Open Metamask, click on the three dots, click on `Account Details` and then `Export Private Key`. MAKE SURE YOU ARE USING A TEST ACCOUNT THAT DOES NOT HAVE MAINNET FUNDS FOR THIS. Add this Private Key below in your `.env` file for `PRIVATE_KEY` variable.
+
+We will deploy the contract to the **`goerli`** network.
+
+Create/replace ./**`scripts`**/**`deploy.js`**.
+
+```solidity
+const { ethers } = require("hardhat");
+require("dotenv").config({ path: ".env" });
+const { WHITELIST_CONTRACT_ADDRESS, METADATA_URL } = require("../constants");
+
+async function main() {
+  // Address of the whitelist contract that you deployed in the previous module
+  const whitelistContract = WHITELIST_CONTRACT_ADDRESS;
+  // URL from where we can extract the metadata for a Crypto Dev NFT
+  const metadataURL = METADATA_URL;
+  /*
+  A ContractFactory in ethers.js is an abstraction used to deploy new smart contracts,
+  so cryptoDevsContract here is a factory for instances of our CryptoDevs contract.
+  */
+  const cryptoDevsContract = await ethers.getContractFactory("CryptoDevs");
+
+  // deploy the contract
+  const deployedCryptoDevsContract = await cryptoDevsContract.deploy(
+    metadataURL,
+    whitelistContract
+  );
+
+  // print the address of the deployed contract
+  console.log(
+    "Crypto Devs Contract Address:",
+    deployedCryptoDevsContract.address
+  );
+}
+
+// Call the main function and catch if there is any error
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
+```
+
