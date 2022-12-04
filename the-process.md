@@ -1,5 +1,5 @@
 ---
-description: The key process of developign dapps
+description: The key process of developing dapps
 ---
 
 # The Process
@@ -42,6 +42,7 @@ contract myContract {...}
 
 **3) Prepare for deployment to the `goerli` network using** [Quicknode](https://www.quicknode.com/?utm\_source=learnweb3\&utm\_campaign=generic\&utm\_content=sign-up\&utm\_medium=learnweb3) **endpoint.**
 
+* **Sign in to**  [**Quicknode**](https://www.quicknode.com/?utm\_source=learnweb3\&utm\_campaign=generic\&utm\_content=sign-up\&utm\_medium=learnweb3) **and create a goerli endpoint**
 * install **`dotenv` ** package to be able to import the env file and use it in our config
 
 ```shell
@@ -125,6 +126,11 @@ npx hardhat run scripts/deploy.js --network goerli
 
 ### dApp Deploy - [Vercel](https://vercel.com/)&#x20;
 
-###
+* Go to [Vercel](https://vercel.com/) and sign in with your GitHub
+* Then click on `New Project` button and then select your project repo
+* When configuring your new project, Vercel will allow you to customize your `Root Directory`
+* Click `Edit` next to `Root Directory` and set it to `my-app`
+* Select the Framework as `Next.js`
+* Click `Deploy`
 
 ### Misc
