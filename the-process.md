@@ -18,7 +18,7 @@ npm install -g lite-server
 
 ### Smart Contract Dev
 
-**1) To build the smart contract we will be using** [**Hardhat**](https://hardhat.org/) **from bootstraping.**
+**1) To build the smart contract we will be using** [**Hardhat**](https://hardhat.org/)**; for bootstraping.**
 
 ```shell
 mkdir Whitelist-Dapp
