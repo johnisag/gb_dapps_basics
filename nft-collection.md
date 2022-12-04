@@ -769,3 +769,17 @@ export default function Home() {
 }
 ```
 {% endcode %}
+
+Create **index.js** in **my-app/constants** folder
+
+<pre class="language-javascript"><code class="lang-javascript"><strong>// abi from hardhat_tutorial\artifacts\contracts\CryptoDevs.sol\CryptoDevs.json
+</strong><strong>export const abi =---your abi---
+</strong>export const NFT_CONTRACT_ADDRESS = "address of your NFT contract"
+</code></pre>
+
+Run it from **my-app folder**
+
+```shell
+npm run dev
+```
+
