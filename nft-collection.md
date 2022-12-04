@@ -769,3 +769,65 @@ export default function Home() {
 }
 ```
 {% endcode %}
+
+Create **index.js** in **my-app/constants** folder
+
+<pre class="language-javascript"><code class="lang-javascript"><strong>// abi from hardhat_tutorial\artifacts\contracts\CryptoDevs.sol\CryptoDevs.json
+</strong><strong>export const abi =---your abi---
+</strong>export const NFT_CONTRACT_ADDRESS = "address of your NFT contract"
+</code></pre>
+
+Run it from **my-app folder**
+
+```shell
+npm run dev
+```
+
+### Deploy our dApp
+
+1. Go to [Vercel](https://vercel.com/) and sign in with your GitHub
+2. Then click on `New Project` button and then select your NFT-Collection repo
+3. When configuring your new project, Vercel will allow you to customize your `Root Directory`
+4. Click `Edit` next to `Root Directory` and set it to `my-app`
+5. Select the Framework as `Next.js`
+6. Click `Deploy`
+
+### View in Open Sea
+
+Create new API as: **\[tokenId].js** in **pages/api** folder (\[tokenId].js with the brackets for name resolution of param)
+
+```javascript
+export default function handler(req, res) {
+  // get the tokenId from the query params
+  const tokenId = req.query.tokenId;
+  // As all the images are uploaded on github, we can extract the images from github directly.
+  const image_url =
+    "https://raw.githubusercontent.com/LearnWeb3DAO/NFT-Collection/main/my-app/public/cryptodevs/";
+  // The api is sending back metadata for a Crypto Dev
+  // To make our collection compatible with Opensea, we need to follow some Metadata standards
+  // when sending back the response from the api
+  // More info can be found here: https://docs.opensea.io/docs/metadata-standards
+  res.status(200).json({
+    name: "Crypto Dev #" + tokenId,
+    description: "Crypto Dev is a collection of developers in crypto",
+    image: image_url + tokenId + ".svg",
+  });
+}
+```
+
+Now you have an API route that OpenSea, and other websites, can call to retrieve the metadata for the NFT. Those websites first call `tokenURI` on the smart contract to get the link of where the NFT metadata is stored. `tokenURI` will give them your API route we just created. Then, they can call this API route to get the name, description, and image for the NFT.
+
+Lets deploy a new version of the `Crypto Devs` contract with this new API route as your `METADATA_URL`
+
+Open your `hardhat-tutorial/constants` folder and inside your `index.js` file, replace "https://nft-collection-sneh1999.vercel.app/api/" with the domain which you saved to notepad and add "/api/" to its end.
+
+**Deploy** from **`hardhat-tutorial` folder**&#x20;
+
+```shell
+npx hardhat run scripts/deploy.js --network goerli
+```
+
+
+
+
+

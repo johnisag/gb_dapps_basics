@@ -2,7 +2,7 @@
 description: The key process of developing dapps
 ---
 
-# The Process
+# dApp Dev Process
 
 ### Requirements
 
@@ -32,7 +32,13 @@ npm install --save-dev hardhat
 npx hardhat
 ```
 
-**2) Add contract(s) in the contracts folder**
+**2) install Open Zeppelin contracts if required**
+
+```shell
+npm install @openzeppelin/contracts
+```
+
+**3) Add contract(s) in the contracts folder**
 
 ```solidity
 //SPDX-License-Identifier: Unlicense
@@ -40,7 +46,7 @@ pragma solidity ^0.8.0;
 contract myContract {...}
 ```
 
-**3) Prepare for deployment to the `goerli` network using** [Quicknode](https://www.quicknode.com/?utm\_source=learnweb3\&utm\_campaign=generic\&utm\_content=sign-up\&utm\_medium=learnweb3) **endpoint.**
+**4) Prepare for deployment to the `goerli` network using** [Quicknode](https://www.quicknode.com/?utm\_source=learnweb3\&utm\_campaign=generic\&utm\_content=sign-up\&utm\_medium=learnweb3) **endpoint.**
 
 * **Sign in to**  [**Quicknode**](https://www.quicknode.com/?utm\_source=learnweb3\&utm\_campaign=generic\&utm\_content=sign-up\&utm\_medium=learnweb3) **and create a goerli endpoint**
 * install **`dotenv` ** package to be able to import the env file and use it in our config
@@ -56,7 +62,7 @@ QUICKNODE_HTTP_URL="add-quicknode-http-provider-url-here"
 PRIVATE_KEY="add-the-private-key-here"
 ```
 
-**4) Create/replace ./`scripts`/`deploy.js`.**
+**5) Create/replace ./`scripts`/`deploy.js`.**
 
 ```solidity
 const { ethers } = require("hardhat");
@@ -85,7 +91,7 @@ main()
   });
 ```
 
-**5) Set hardhat to use `goerli` network using** [**Quicknode**](https://www.quicknode.com/?utm\_source=learnweb3\&utm\_campaign=generic\&utm\_content=sign-up\&utm\_medium=learnweb3) **endpoint from DEPLOYMENT**
+**6) Set hardhat to use `goerli` network using** [**Quicknode**](https://www.quicknode.com/?utm\_source=learnweb3\&utm\_campaign=generic\&utm\_content=sign-up\&utm\_medium=learnweb3) **endpoint from DEPLOYMENT**
 
 * Update the hardhat.config.js
 
@@ -107,7 +113,7 @@ module.exports = {
 };
 ```
 
-**6) Compile and Deploy from Hardhat root folder**
+**7) Compile and Deploy from Hardhat root folder**
 
 ```shell
 # compile
