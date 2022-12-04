@@ -11,7 +11,7 @@ description: Create a whitelist dApp
 * Whitelist access should be given to the first `10` users for free who want to get in.
 * There should be a website where people can go and enter into the whitelist.
 
-### Smart Contract
+### Build
 
 #### Smart Contract
 
@@ -72,8 +72,7 @@ contract Whitelist {
         // Increase the number of whitelisted addresses
         numAddressesWhitelisted += 1;
     }
-}
-</code></pre>
+}</code></pre>
 
 We will deploy the contract to the **`goerli`** network.
 
@@ -168,7 +167,7 @@ npx hardhat run scripts/deploy.js --network goerli
 
 Copy your deployed contract address from **shell** and find your new token contract on  [Goerli Etherscan  ](https://goerli.etherscan.io/)
 
-### Website
+#### Website
 
 To develop the website we will use [React](https://reactjs.org/) and [Next Js](https://nextjs.org/).
 
@@ -506,14 +505,7 @@ export default function Home() {
 ```
 {% endcode %}
 
-### Deploy our dApp
 
-1. Go to [Vercel](https://vercel.com/) and sign in with your GitHub
-2. Then click on `New Project` button and then select your whitelist repo
-3. When configuring your new project, Vercel will allow you to customize your `Root Directory`
-4. Click `Edit` next to `Root Directory` and set it to `my-app`
-5. Select the Framework as `Next.js`
-6. Click `Deploy`
 
 
 
