@@ -263,3 +263,51 @@ main()
   });
 ```
 
+**deploy.js** requires some constants.&#x20;
+
+Create a **new folder** named **constants** inside the **hardhat-tutorial folder**.&#x20;
+
+Create an **index.js** file inside the **constants** folder
+
+```javascript
+// Address of the Whitelist Contract that you deployed
+const WHITELIST_CONTRACT_ADDRESS = "address-of-the-whitelist-contract";
+
+// URL to extract Metadata for a Crypto Dev NFT
+// to be added alter on
+const METADATA_URL = "https://nft-collection-sneh1999.vercel.app/api/";
+
+module.exports = { WHITELIST_CONTRACT_ADDRESS, METADATA_URL };
+```
+
+Update **hardhat.config.js** file to use the **goerli** network
+
+```javascript
+require("@nomicfoundation/hardhat-toolbox");
+require("dotenv").config({ path: ".env" });
+
+const QUICKNODE_HTTP_URL = process.env.QUICKNODE_HTTP_URL;
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
+
+module.exports = {
+  solidity: "0.8.4",
+  networks: {
+    goerli: {
+      url: QUICKNODE_HTTP_URL,
+      accounts: [PRIVATE_KEY],
+    },
+  },
+};
+```
+
+**Compile and deploy**
+
+```shell
+# from within hardhat folder
+npx hardhat compile
+npx hardhat run scripts/deploy.js --network goerli
+```
+
+### **Website**&#x20;
+
+****
