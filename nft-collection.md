@@ -783,3 +783,11 @@ Run it from **my-app folder**
 npm run dev
 ```
 
+### Deploy our dApp
+
+1. Go to [Vercel](https://vercel.com/) and sign in with your GitHub
+2. Then click on `New Project` button and then select your NFT-Collection repo
+3. When configuring your new project, Vercel will allow you to customize your `Root Directory`
+4. Click `Edit` next to `Root Directory` and set it to `my-app`
+5. Select the Framework as `Next.js`
+6. Click `Deploy`
