@@ -769,25 +769,3 @@ export default function Home() {
 }
 ```
 {% endcode %}
-
-Create **index.js** in **my-app/constants** folder
-
-<pre class="language-javascript"><code class="lang-javascript"><strong>// abi from hardhat_tutorial\artifacts\contracts\CryptoDevs.sol\CryptoDevs.json
-</strong><strong>export const abi =---your abi---
-</strong>export const NFT_CONTRACT_ADDRESS = "address of your NFT contract"
-</code></pre>
-
-Run it from **my-app folder**
-
-```shell
-npm run dev
-```
-
-### Deploy our dApp
-
-1. Go to [Vercel](https://vercel.com/) and sign in with your GitHub
-2. Then click on `New Project` button and then select your NFT-Collection repo
-3. When configuring your new project, Vercel will allow you to customize your `Root Directory`
-4. Click `Edit` next to `Root Directory` and set it to `my-app`
-5. Select the Framework as `Next.js`
-6. Click `Deploy`
