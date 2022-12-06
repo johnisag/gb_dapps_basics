@@ -142,7 +142,24 @@ npx hardhat run scripts/deploy.js --network goerli
 
 ### dApp Dev
 
-TODO&#x20;
+**1) Boostrap the**  [**React**](https://reactjs.org/) **/** [**Next Js**](https://nextjs.org/) **web app (from project root)**
+
+```shell
+npx create-next-app@latest
+
+# start local web server on http://localhost:3000; see that bootstrap worked
+cd my-app
+npm run dev
+```
+
+**2) Install required web3 libraries (** [Web3Modal library](https://github.com/Web3Modal/web3modal), [ethers](https://docs.ethers.io/v3/)**)**
+
+```shell
+npm install web3modal
+npm install ethers
+```
+
+****
 
 ### dApp Deploy - [Vercel](https://vercel.com/)&#x20;
 
