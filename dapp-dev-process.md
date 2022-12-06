@@ -32,13 +32,13 @@ npm install --save-dev hardhat
 npx hardhat
 ```
 
-**2) install Open Zeppelin contracts if required**
+**2) install** [**Open Zeppelin**](https://github.com/OpenZeppelin/openzeppelin-contracts) **contracts if required**
 
 ```shell
 npm install @openzeppelin/contracts
 ```
 
-**3) Add contract(s) in the contracts folder**
+**3) Add contract(s) in the ./contracts folder**
 
 ```solidity
 //SPDX-License-Identifier: Unlicense
@@ -46,16 +46,16 @@ pragma solidity ^0.8.0;
 contract MyContract {...}
 ```
 
-**4) Prepare for deployment to the `goerli` network using** [Quicknode](https://www.quicknode.com/?utm\_source=learnweb3\&utm\_campaign=generic\&utm\_content=sign-up\&utm\_medium=learnweb3) **endpoint.**
+**4) Prepare for deployment to the** [**`goerli` ** ](https://goerli.etherscan.io/)**test network using** [Quicknode](https://www.quicknode.com/?utm\_source=learnweb3\&utm\_campaign=generic\&utm\_content=sign-up\&utm\_medium=learnweb3) **endpoint.**
 
 * **Sign in to**  [**Quicknode**](https://www.quicknode.com/?utm\_source=learnweb3\&utm\_campaign=generic\&utm\_content=sign-up\&utm\_medium=learnweb3) **and create a goerli endpoint**
-* install **`dotenv` ** package to be able to import the env file and use it in our config
+* install [**`dotenv` ** ](https://www.npmjs.com/package/dotenv)package to be able to import the env file and use it in our config
 
 ```shell
 npm install dotenv
 ```
 
-* Create a ** `.env`** file in the **`hardhat`**folder and add the following lines
+* Create a ** `.env`** file in the [**`Hardhat`**](https://hardhat.org/)folder and add the following lines
 
 ```javascript
 QUICKNODE_HTTP_URL="add-quicknode-http-provider-url-here"
@@ -105,7 +105,7 @@ main()
   });
 ```
 
-**7) Set hardhat to use `goerli` network using** [**Quicknode**](https://www.quicknode.com/?utm\_source=learnweb3\&utm\_campaign=generic\&utm\_content=sign-up\&utm\_medium=learnweb3) **endpoint from DEPLOYMENT**
+**7) Set hardhat to use** [**`goerli` ** ](https://goerli.etherscan.io/)**network using** [**Quicknode**](https://www.quicknode.com/?utm\_source=learnweb3\&utm\_campaign=generic\&utm\_content=sign-up\&utm\_medium=learnweb3) **endpoint from DEPLOYMENT**
 
 * Update the hardhat.config.js
 
@@ -127,7 +127,7 @@ module.exports = {
 };
 ```
 
-**8) Compile and Deploy from Hardhat root folder**
+**8) Compile and Deploy from** [**Hardhat** ](https://hardhat.org/)**root folder**
 
 ```shell
 # compile
