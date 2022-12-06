@@ -43,7 +43,7 @@ npm install @openzeppelin/contracts
 ```solidity
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
-contract myContract {...}
+contract MyContract {...}
 ```
 
 **4) Prepare for deployment to the `goerli` network using** [Quicknode](https://www.quicknode.com/?utm\_source=learnweb3\&utm\_campaign=generic\&utm\_content=sign-up\&utm\_medium=learnweb3) **endpoint.**
@@ -62,24 +62,38 @@ QUICKNODE_HTTP_URL="add-quicknode-http-provider-url-here"
 PRIVATE_KEY="add-the-private-key-here"
 ```
 
-**5) Create/replace ./`scripts`/`deploy.js`.**
+**5) Put constants (if any) in a centralized place. Create ./constants/index.js**
 
-```solidity
+```javascript
+// Another contract address which is used in deploy (this is an example)
+const ANOTHER_CONTRACT_ADDRESS = "0xA3b72e87664D52c3AcFCf4048C021E8931a3b759";
+
+module.exports = { ANOTHER_CONTRACT_ADDRESS };
+```
+
+**6) Create/replace ./`scripts`/`deploy.js`.**
+
+```javascript
 const { ethers } = require("hardhat");
+require("dotenv").config({ path: ".env" });
+const { ANOTHER_CONTRACT_ADDRESS } = require("../constants");
 
 async function main() {
+  // another contract address which is used inour main contract
+  const anotherContractAddress = ANOTHER_CONTRACT_ADDRESS;
+
   // ContractFactory in ethers.js is an abstraction used to deploy new smart contracts
-  const myContract= await ethers.getContractFactory("myContract");
+  const myContract= await ethers.getContractFactory("MyContract");
 
   // here we deploy the contract
-  const deployedMyContract = await myContract.deploy(10);
-  // 10 is the Maximum number of addresses allowed
+  // The constractor uses another contract address
+  const deployedMyContract = await myContract.deploy(anotherContractAddress);
 
   // Wait for it to finish deploying
   await deployedWhitelistContract.deployed();
 
   // print the address of the deployed contract
-  console.log("Contract Address:", deployedWhitelistContract.address);
+  console.log("Contract Address:", deployedMyContract .address);
 }
 
 // Call the main function and catch if there is any error
@@ -91,7 +105,7 @@ main()
   });
 ```
 
-**6) Set hardhat to use `goerli` network using** [**Quicknode**](https://www.quicknode.com/?utm\_source=learnweb3\&utm\_campaign=generic\&utm\_content=sign-up\&utm\_medium=learnweb3) **endpoint from DEPLOYMENT**
+**7) Set hardhat to use `goerli` network using** [**Quicknode**](https://www.quicknode.com/?utm\_source=learnweb3\&utm\_campaign=generic\&utm\_content=sign-up\&utm\_medium=learnweb3) **endpoint from DEPLOYMENT**
 
 * Update the hardhat.config.js
 
@@ -113,7 +127,7 @@ module.exports = {
 };
 ```
 
-**7) Compile and Deploy from Hardhat root folder**
+**8) Compile and Deploy from Hardhat root folder**
 
 ```shell
 # compile
