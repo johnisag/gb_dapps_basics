@@ -159,6 +159,21 @@ npm install web3modal
 npm install ethers
 ```
 
+**3) Create/Update CSS on ./styles/Home.module.css if required**
+
+**4) Add dApp logic in ./pages/index.js**
+
+**5) Add constants (contract(s) addresses, ABIs,...) in constants/index.js.**&#x20;
+
+```javascript
+export const NFT_CONTRACT_ABI = "abi-of-your-nft-contract";
+export const NFT_CONTRACT_ADDRESS = "address-of-your-nft-contract";
+export const TOKEN_CONTRACT_ABI = "abi-of-your-token-contract";
+export const TOKEN_CONTRACT_ADDRESS = "address-of-your-token-contract";
+```
+
+**6)**
+
 ****
 
 ### dApp Deploy - [Vercel](https://vercel.com/)&#x20;
@@ -170,4 +185,72 @@ npm install ethers
 * Select the Framework as `Next.js`
 * Click `Deploy`
 
-### Misc
+### Core Funcs
+
+* **Keep track if the wallet is connected or not**
+
+```javascript
+// walletConnected keeps track of whether the user's wallet is connected or not
+const [walletConnected, setWalletConnected] = useState(false);
+```
+
+* **Keep a reference to Web3 Model** (used for connecting to **Metamask**) **which persists as long as the page is open**
+
+```javascript
+import Web3Modal from "web3modal";
+const web3ModalRef: any = useRef();
+```
+
+* **Get a Provider (just view data) or a Signer (view or modify data)**
+
+```javascript
+import Web3Modal from "web3modal";
+const web3ModalRef: any = useRef();
+
+const getProviderOrSigner = async (needSigner = false) => {
+    // Connect to Metamask
+    // Since we store `web3Modal` as a reference, we need to access 
+    // the `current` value to get access to the underlying object
+    const provider = await web3ModalRef.current.connect();
+    const web3Provider = new providers.Web3Provider(provider);
+
+    // If user is not connected to the Goerli network, 
+    // let them know and throw an error
+    const { chainId } = await web3Provider.getNetwork();
+    if (chainId !== 5) {
+      window.alert("Change the network to Goerli");
+      throw new Error("Change network to Goerli");
+    }
+
+    if (needSigner) {
+      const signer = web3Provider.getSigner();
+      return signer;
+    }
+    return web3Provider;
+};
+```
+
+* **Extract the address of the currently connected (e.g. MetaMask) account**
+
+```javascript
+const signer: any = await getProviderOrSigner(true);
+const address = await signer.getAddress();
+```
+
+* **Create a contract instance**
+
+```javascript
+import { Contract, providers} from "ethers";
+
+// Get the provider from web3Modal (e.g MetaMask)
+// If we need to modify data, we will need a signer
+const provider = await getProviderOrSigner();
+const signer: any = await getProviderOrSigner(true);
+
+// Create an instance of MyContract
+// ABI can be found in:
+// hardhat_folder\artifacts\contracts\MyContract.sol\MyContract.json
+const tokenContract = new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
+```
+
+****
