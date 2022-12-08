@@ -159,11 +159,11 @@ npm install web3modal
 npm install ethers
 ```
 
-**3) Create/Update CSS on ./styles/Home.module.css if required**
+**3) Create/Update CSS on ./styles/Home.module.css** if required
 
 **4) Add dApp logic in ./pages/index.js**
 
-**5) Add constants (contract(s) addresses, ABIs,...) in constants/index.js.**&#x20;
+**5) Add constants (**contract(s) addresses, ABIs,...**)** in **constants/index.js.**&#x20;
 
 ```javascript
 export const NFT_CONTRACT_ABI = "abi-of-your-nft-contract";
@@ -230,7 +230,7 @@ const getProviderOrSigner = async (needSigner = false) => {
 };
 ```
 
-* **Extract the address of the currently connected (e.g. MetaMask) account**
+* **Extract the address of the currently connected (e.g. MetaMask) account - **<mark style="color:orange;">**needs signer**</mark>
 
 ```javascript
 const signer: any = await getProviderOrSigner(true);
@@ -244,7 +244,7 @@ import { Contract, providers} from "ethers";
 
 // Get the provider from web3Modal (e.g MetaMask)
 // If we need to modify data, we will need a signer
-const provider = await getProviderOrSigner();
+const provider = await getProviderOrSigner(); // OR
 const signer: any = await getProviderOrSigner(true);
 
 // Create an instance of MyContract
