@@ -16,7 +16,7 @@ description: The key process of developing dapps
 npm install -g lite-server
 ```
 
-### Smart Contract Dev
+### Contracts - Dev Process
 
 **1) To build the smart contract we will be using** [**Hardhat**](https://hardhat.org/)**; for bootstraping.**
 
@@ -140,7 +140,60 @@ npm install --save-dev @nomicfoundation/hardhat-toolbox
 npx hardhat run scripts/deploy.js --network goerli
 ```
 
-### dApp Dev
+### Contracts - Dev Core
+
+* **Create ERC20 Contract**
+
+<pre class="language-solidity"><code class="lang-solidity">// SPDX-License-Identifier: MIT
+<strong>pragma solidity ^0.8.0;
+</strong>
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract CryptoDevToken is ERC20, Ownable {
+    // whatever price per token
+    uint256 public constant tokenPrice = 0.001 ether;
+    // the max total supply is e.g. 10000 for My Tokens
+    uint256 public constant maxTotalSupply = 10000 * 10**18;
+    
+    constructor() ERC20("My Own Token", "MOT") {}
+    
+    function mint(uint256 amount) public payable {
+        // value of ether: should be equal or greater than tokenPrice * amount;
+        uint256 _requiredAmount = tokenPrice * amount;
+        require(msg.value >= _requiredAmount, "Ether sent is incorrect");
+        // total tokens + amount &#x3C;= 10000, otherwise revert the transaction
+        uint256 amountWithDecimals = amount * 10**18;
+        require(
+           (totalSupply() + amountWithDecimals) &#x3C;= maxTotalSupply,
+           "Exceeds the max total supply available."
+        );
+        // call the internal function from Openzeppelin's ERC20 contract
+        _mint(msg.sender, amountWithDecimals);
+      }
+      
+      function withdraw() public onlyOwner {
+        uint256 amount = address(this).balance;
+        require(amount > 0, "Nothing to withdraw; contract balance empty");
+        
+        address _owner = owner();
+        (bool sent, ) = _owner.call{value: amount}("");
+        require(sent, "Failed to send Ether");
+      }
+      
+      // Function to receive Ether. msg.data must be empty
+      receive() external payable {}
+
+      // Fallback function is called when msg.data is not empty
+      fallback() external payable {}
+}
+</code></pre>
+
+
+
+
+
+### dApp - Dev Process
 
 **1) Boostrap the**  [**React**](https://reactjs.org/) **/** [**Next Js**](https://nextjs.org/) **web app (from project root)**
 
@@ -166,8 +219,6 @@ npm install ethers
 **5) Add constants (**contract(s) addresses, ABIs,...**)** in **constants/index.js.**&#x20;
 
 ```javascript
-export const NFT_CONTRACT_ABI = "abi-of-your-nft-contract";
-export const NFT_CONTRACT_ADDRESS = "address-of-your-nft-contract";
 export const TOKEN_CONTRACT_ABI = "abi-of-your-token-contract";
 export const TOKEN_CONTRACT_ADDRESS = "address-of-your-token-contract";
 ```
@@ -176,7 +227,7 @@ export const TOKEN_CONTRACT_ADDRESS = "address-of-your-token-contract";
 
 ****
 
-### dApp Deploy - [Vercel](https://vercel.com/)&#x20;
+### dApp - [Vercel](https://vercel.com/) Deploy&#x20;
 
 * Go to [Vercel](https://vercel.com/) and sign in with your GitHub
 * Then click on `New Project` button and then select your project repo
@@ -185,7 +236,7 @@ export const TOKEN_CONTRACT_ADDRESS = "address-of-your-token-contract";
 * Select the Framework as `Next.js`
 * Click `Deploy`
 
-### Core Funcs
+### dApps - Core Dev
 
 * **Keep track if the wallet is connected or not**
 
@@ -253,4 +304,67 @@ const signer: any = await getProviderOrSigner(true);
 const tokenContract = new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
 ```
 
-****
+* **Mint NUM\_TOKENS and pass Y ether to contract creator per token creation**
+
+<pre class="language-javascript"><code class="lang-javascript">import { Contract, providers} from "ethers";
+
+try {
+<strong>    const signer = await getProviderOrSigner(true);
+</strong>    const tokenContract = new Contract(TOKEN_CREATOR_ADDRESS,TOKEN_CREATOR_ABI,signer);
+    // 0.001: the eth cost to create of 1 token
+    const value = 0.001 * num_tokens; // or whatever amount per token creation
+    const tx = await tokenContract.mint(num_tokens, {
+        // Parsing `0.001` string to ether using the utils library from ethers.js
+        value: utils.parseEther(value.toString()),
+    });
+    await tx.wait();
+    window.alert("Tokens minted!")
+} catch (err) {
+    console.error(err);
+}
+</code></pre>
+
+* **Connect Metamask wrapper function**
+
+```javascript
+// walletConnected keeps track of whether the user's wallet is connected or not
+const [walletConnected, setWalletConnected] = useState(false);
+
+const connectWallet = async () => {
+    try {
+      // Get the provider from web3Modal, which in our case is MetaMask
+      // When used for the first time, it prompts the user to connect their wallet
+      await getProviderOrSigner();
+      setWalletConnected(true);
+    } catch (err) {
+      console.error(err);
+    }
+}
+
+// useEffects are used to react to changes in state of the website
+// array at the end represents what state changes will trigger this effect
+// whenever the value of `walletConnected` changes - this effect will be called
+useEffect(() => {
+    // if wallet is not connected, create a new instance of Web3Modal and connect the MetaMask wallet
+    if (!walletConnected) {
+      // Assign the Web3Modal class to the reference object by setting it's `current` value
+      // The `current` value is persisted throughout as long as this page is open
+      web3ModalRef.current = new Web3Modal({
+        network: "goerli",
+        providerOptions: {},
+        disableInjectedProvider: false,
+      });
+      connectWallet();
+    }
+}, [walletConnected]);
+```
+
+```html
+<button onClick={connectWallet} className={styles.button}>
+    Connect your wallet
+</button>
+```
+
+* \
+  \
+  \
