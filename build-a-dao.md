@@ -4,8 +4,6 @@ description: Build a dao for our NFT collection
 
 # Build a DAO
 
-###
-
 ### Basics
 
 #### What is a DAO?
