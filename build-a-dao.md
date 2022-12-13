@@ -305,3 +305,120 @@ contract CryptoDevsDAO is Ownable {
 }
 
 ```
+
+Go to [Quicknode](https://www.quicknode.com/?utm\_source=learnweb3\&utm\_campaign=generic\&utm\_content=sign-up\&utm\_medium=learnweb3) and sign up for an account.&#x20;
+
+Install **`dotenv` ** package to be able to import the env file and use it in our config.&#x20;
+
+Inside **`hardhat-tutorial`** directory:
+
+```shell
+npm install dotenv
+```
+
+Create a `.env` file in the `hardha_tutorial` folder and add the following lines
+
+```python
+QUICKNODE_HTTP_URL="add-quicknode-http-provider-url-here"
+PRIVATE_KEY="add-the-private-key-here"
+```
+
+Create/replace ./**`scripts`**/**`deploy.js`**.
+
+```javascript
+const { ethers } = require("hardhat");
+const { CRYPTODEVS_NFT_CONTRACT_ADDRESS } = require("../constants");
+
+async function main() {
+  // Deploy the FakeNFTMarketplace contract first
+  const FakeNFTMarketplace = await ethers.getContractFactory(
+    "FakeNFTMarketplace"
+  );
+  const fakeNftMarketplace = await FakeNFTMarketplace.deploy();
+  await fakeNftMarketplace.deployed();
+
+  console.log("FakeNFTMarketplace deployed to: ", fakeNftMarketplace.address);
+
+  // Now deploy the CryptoDevsDAO contract
+  const CryptoDevsDAO = await ethers.getContractFactory("CryptoDevsDAO");
+  const cryptoDevsDAO = await CryptoDevsDAO.deploy(
+    fakeNftMarketplace.address,
+    CRYPTODEVS_NFT_CONTRACT_ADDRESS,
+    {
+      // This assumes your account has at least 1 ETH in it's account
+      // Change this value as you want
+      value: ethers.utils.parseEther("0.1"),
+    }
+  );
+  await cryptoDevsDAO.deployed();
+
+  console.log("CryptoDevsDAO deployed to: ", cryptoDevsDAO.address);
+}
+
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
+```
+
+**deploy.js** requires some constants.&#x20;
+
+Create a **new folder** named **constants** inside the **hardhat-tutorial folder**.&#x20;
+
+Create an **index.js** file inside the **constants** folder
+
+```javascript
+//Replace the value with your NFT contract address
+const CRYPTODEVS_NFT_CONTRACT_ADDRESS = "0xA3b72e87664D52c3AcFCf4048C021E8931a3b759";
+
+module.exports = { CRYPTODEVS_NFT_CONTRACT_ADDRESS };
+```
+
+Update **hardhat.config.js** file to use the **goerli** network
+
+```javascript
+require("@nomicfoundation/hardhat-toolbox");
+require("dotenv").config({ path: ".env" });
+
+const QUICKNODE_HTTP_URL = process.env.QUICKNODE_HTTP_URL;
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
+
+module.exports = {
+  solidity: "0.8.4",
+  networks: {
+    goerli: {
+      url: QUICKNODE_HTTP_URL,
+      accounts: [PRIVATE_KEY],
+    },
+  },
+};
+```
+
+**Compile and deploy**
+
+```shell
+# from within hardhat folder
+npx hardhat compile
+npx hardhat run scripts/deploy.js --network goerli
+```
+
+### dApp&#x20;
+
+**Bootstrap** the **Next js** project from the project root and run it (**http://localhost:3000**)
+
+```shell
+npx create-next-app@latest
+cd my-app
+npm run dev
+```
+
+Install **web3modal** and **ethers.js** libraries
+
+```shell
+npm install web3modal
+npm install ethers
+```
+
+Update **Home.modules.css** into the **styles folder**
