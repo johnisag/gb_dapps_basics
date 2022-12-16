@@ -6,7 +6,7 @@ description: Ethereum Virtual Machine (EVM)
 
 The Ethereum network exists solely for the purpose of keeping the single, continuous, uninterrupted, and immutable operation of the state machine that is the Ethereum blockchain.
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption><p>Ethereum Application Stack</p></figcaption></figure>
+<figure><img src=".gitbook/assets/image (3).png" alt=""><figcaption><p>Ethereum Application Stack</p></figcaption></figure>
 
 ### Ethereum as a State Machine
 
@@ -36,7 +36,7 @@ Ethereum nodes contain implementations of the EVM, and the EVM can then execute 
 
 <figure><img src=".gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src=".gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### EVM Instructions (OPCODES)
 
