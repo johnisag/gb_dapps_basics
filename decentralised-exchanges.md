@@ -249,3 +249,34 @@ function addLiquidity(uint tokenAmount) public payable {
 Now we have LP-tokens, we can also use them to calculate how much underlying tokens to return when someone wants to withdraw their liquidity in exchange for their LP-tokens.
 
 We don't need to remember how much they originally deposited. Since LP-tokens are proportional to amount of ETH deposited, we can rearrange the above formula to calculate the amount of ETH to return, and proportionately calculate the amount of tokens to return.
+
+### Fees
+
+Now to collect fees on swaps and distribute them amongst liquidity providers, we need to think about a couple of things:
+
+* Do we collect fees in ETH or tokens?
+* Do we pay rewards in ETH or tokens?
+* How do we collect the fees from each swap?
+* How to distribute the fees amongst all liquidity providers?
+
+These may seem difficult questions to answer, but we actually have everything we need to answer them.
+
+1. Traders are already sending ether/tokens to the contract. Instead of asking for an explicit fee, we can just deduct some amount from the ether/tokens they are sending.
+2. We can just add the fees to the reserve balance. This means, over time, the reserves will grow!
+3. We can collect fees in the currency of the asset being deposited by the trader. Liquidity providers thus get a balanced amount of ether and tokens proportional to their share of LP-tokens.
+
+**Uniswap takes a 0.03% fees from each swap**.&#x20;
+
+Let's say we take 1% to keep things simple. Adding fees to the contract is as simple as making a few edits to our price calculation formula:
+
+We had&#x20;
+
+**`outputAmount = (outputReserve * inputAmount) / (inputReserve + inputAmount)`**
+
+Now,
+
+**`outputAmountWithFees = 0.99 * outputAmount`**
+
+But, Solidity does not support floating point operations. So for Solidity we rewrite the formula as such:
+
+**`outputAmountWithFees = (outputAmount * 99) / 100`**
