@@ -138,5 +138,114 @@ Some may see this as a flaw of automated market makers that follow `x*y = k`, bu
 
 **This also aligns with the law of supply and demand: the higher the demand relative to the supply, the more costly it is to buy that supply.**
 
+### Who sets the initial price?
 
+When a new cryptocurrency is created, there is no liquidity for trading pairs involving that token.
 
+Therefore, the first person adding liquidity to the pool gets to set a price.
+
+<mark style="color:orange;">**Adding liquidity involves adding tokens from both sides of the trading pair - you cannot add liquidity for just one side**</mark><mark style="color:orange;">.</mark>
+
+When the first person adds liquidity, it creates a reserve balance and sets the initial `x` and `y` values
+
+From that point onward, we can do price calculations when swapping between tokens.
+
+A simple implementation of the **`addLiquidity` ** in **Solidity**:
+
+```solidity
+// This function accepts ETH and a token from the user.
+function addLiquidity(uint256 tokenAmount) public payable {
+    IERC20 token = IERC20(tokenAddress);
+    token.transferFrom(msg.sender, address(this), tokenAmount);
+}
+```
+
+**This implementation is incomplete!**
+
+* A second person can come along, and add liquidity in a completely different ratio of reserves which would massively affect price calculations.
+* We do not want to allow for such price manipulations, and we want prices on the decentralized exchange to be as close to those on centralized exchanges as possible.
+
+We must ensure that **anyone adding additional liquidity** to the pool is doing so **in the same proportion** as that already established in the pool.&#x20;
+
+* We only want to allow arbitrary ratios when the pool is completely empty.
+
+A updated implementation of the **`addLiquidity` ** in **Solidity**:
+
+```solidity
+function addLiquidity(uint tokenAmount) public payable {
+    // assuming a hypothetical function
+    // that returns the balance of the
+    // token in the contract
+    if (getReserve() == 0) {
+        IERC20 token = IERC20(tokenAddress);
+        token.transferFrom(msg.sender, address(this), tokenAmount);
+    } else {
+        // msg.value is the amount sending with the func call - ETH 101
+        uint ethReserve = address(this).balance - msg.value;
+        uint tokenReserve = getReserve();
+        uint proportionalTokenAmount = (msg.value * tokenReserve) / ethReserve;
+        require(tokenAmount >= proportionalTokenAmount, "incorrect ratio of tokens provided");
+
+        IERC20 token = IERC20(tokenAddress);
+        token.transferFrom(msg.sender, address(this), proportionalTokenAmount);
+    }
+}
+```
+
+### **LP Tokens**
+
+But what if a liquidity provider wants to withdraw their liquidity from the pool?
+
+* We need a way to reward the liquidity providers for their tokens
+* Nobody would put tokens in a third-party contract if they are not getting something out of it
+
+The only good solution for this is to collect a small fee on each token swap and distribute the fees amongst the liquidity providers, based on how much liquidity they provided.
+
+There is a quite elegant solution to do this: **Liquidity Provider Tokens (LP Tokens)**
+
+**LP Tokens work as shares.**
+
+1. You get LP-tokens in exchange for your liquidity
+2. Amount of tokens you get is proportional to your share of the liquidity in the pool
+3. Fees are distributed proportional to how many LP-tokens you own
+4. LP-tokens can be exchanged back for the liquidity + earned fees
+
+**Additional Requirements:**
+
+1. Issued shares must always be correct. When someone else deposits or removes liquidity after you, your shares should remain and maintain correct values.
+2. Writing data to the chain can be expensive (gas fees) - we want to reduce the maintainence costs of LP-tokens as much as possible.
+
+Imagine we issue a lot of tokens - say a few billion. The first time someone adds liquidity, they own 100% of the liquidity in the pool. So do we give them all few billion tokens?
+
+This leads to the problem that when a second person adds liquidity, the shares need to be recalculated which is expensive due to gas fees.
+
+Alternatively, if we choose to distribute only a portion of the tokens initially, we risk hitting the limit, which will also eventually force us to recalculate existing shares.
+
+The only good solution seems to have no supply limit at all, and mint new tokens whenever new liquidity is added. This allows for infinite growth, and if we do the math carefully, we can make sure issued shares remain correct whenever liquidity is added or removed.
+
+**So, how do we calculate the amount of LP-tokens to be minted when liquidity is added?**
+
+**Uniswap V1** calculates the amount **proportionate to the ETH reserve**. The following equation shows how the amount of new LP-tokens is calculated depending on how much ETH is deposited:
+
+**`amountMinted = totalAmount * (ethDeposited / ethReserve)`**
+
+We can update `addLiquidity` function to mint LP-tokens when liquidity is added:
+
+```solidity
+function addLiquidity(uint tokenAmount) public payable {
+    if (getReserve() == 0) {
+        ...
+
+        uint liquidity = address(this).balance;
+        _mint(msg.sender, liquidity);
+    } else {
+        ...
+        uint liquidity = (totalSupply() * msg.value) / ethReserve;
+        _mint(msg.sender, liquidity);
+    }
+}
+```
+
+Now we have LP-tokens, we can also use them to calculate how much underlying tokens to return when someone wants to withdraw their liquidity in exchange for their LP-tokens.
+
+We don't need to remember how much they originally deposited. Since LP-tokens are proportional to amount of ETH deposited, we can rearrange the above formula to calculate the amount of ETH to return, and proportionately calculate the amount of tokens to return.
