@@ -430,3 +430,15 @@ export const EXCHANGE_CONTRACT_ABI = "ABI-EXCHANGE-CONTRACT";
 export const EXCHANGE_CONTRACT_ADDRESS = "ADDRESS-EXCHANGE-CONTRACT";
 ```
 
+We would create some utility files which would help us to better interact with the contract
+
+In **my-app/utils** folder, create:
+
+* addLiquidity.js
+* removeLiquidity.js
+* getAmounts.js
+* swap.js
+
+&#x20;Create**`getAmounts.js`**.&#x20;
+
+* This file is used to retrieve balances and reserves for assets
