@@ -14,3 +14,4 @@
 * [Launch ICO](launch-ico.md)
 * [Build a DAO](build-a-dao.md)
 * [Decentralised Exchanges](decentralised-exchanges.md)
+* [Build a DEX](build-a-dex.md)
