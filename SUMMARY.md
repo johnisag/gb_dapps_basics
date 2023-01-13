@@ -10,7 +10,6 @@
 * [ERC20 Approval Flow](erc20-approval-flow.md)
 * [Whitelist dApp](whitelist-dapp.md)
 * [NFT Collection](nft-collection.md)
-* [dApp Dev Process](dapp-dev-process.md)
 * [Launch ICO](launch-ico.md)
 * [Build a DAO](build-a-dao.md)
 * [Decentralised Exchanges](decentralised-exchanges.md)
